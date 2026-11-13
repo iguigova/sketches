@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Logs>
+	<Log Path='Logs\Log.txt' Format='Flat' IncludeOnFilter='1' Verbose='3'>
+		<Filter Source='TPayAdapterDSIClientX' />
+	</Log>
+	<Log Path='Logs\Log_GCMercury.txt' Format='Flat' IncludeOnFilter='1' Verbose='3'>
+		<Filter Source='TPayAdapterGCMercury' />
+	</Log>
+	<Log Path='Logs\Log_CADebit.txt' Format='Flat' IncludeOnFilter='1' Verbose='3'>
+		<Filter Source='TwMercuryCaPinPad' />
+	</Log>
+</Logs>

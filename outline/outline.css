@@ -1,0 +1,38 @@
+
+.hidden
+{
+    display:none;
+}
+
+.invisible
+{
+    visibility:hidden;
+}
+
+.header
+{ 
+    margin:5px; 
+    padding:5px
+}
+
+.h1
+{
+    font-size:14px; 
+    font-weight:bold; 
+    padding:5px
+}
+
+.detail
+{ 
+    display:none; 
+    margin-left:40px
+}
+
+.detailswitch
+{ 
+    border: 1px solid #696969; 
+    color: #696969; 
+    margin:5px; 
+    font-size:10px; 
+    cursor:pointer
+}

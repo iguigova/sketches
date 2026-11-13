@@ -1,0 +1,177 @@
+
+The original article and implementation are published at http://www.codeproject.com/KB/trace/crosscutlogging.aspx
+
+Here is an excertp: 
+
+Introduction
+This article attempts to illustartes a logging strategy that allows for an easy, extendable, cross-cut implementation. While the utmost goal has been simplicity, the solution runs tangent to the aspect-oriented programming paradigm and the Entreprise Library's Logging Application Block. The ideas discussed here are more or less language independent but they do stem from a Windows-based object-oriented application development experience. 
+
+The presently proposed logging library is implemented in Delphi in under 800 lines of code. The enclosed source code contains the following projects: LogAgent (a demo application that employes the logging library), LogLib (a set of core objects and interfaces), and LogViewer (optional GUI for log file manipulation, draft). 
+
+The equivalent .NET implementation in C# has been 50% completed. In this case, the broadcast mechanism had to be revisited. 
+
+The logging behaviour is configurable by a single xml file.
+
+Background
+"Logging is the archetypal example of a crosscutting concern because a logging strategy necessarily affects every single logged part of the system. Logging thereby crosscuts all logged classes and methods." (http://en.wikipedia.org/wiki/Aspect-oriented_programming)
+
+The presented logging module has been conceived and delivered in the summer of 2008. In short, it is designed to be a decoupled, unobtrusive, secure, and flexible solution to one of the basic aspects in software construction. 
+
+It is implied that decoupled means that it can be modified at any time without the need to edit the rest of the system, unobtrusive means that it does not have any adverse effect on the performance or the stability of the system, secure means that it does not introduce security breaches in the system, and flexible means that it can be configured to meet a wide variety of debugging, testing, troubleshooting, and production scenarios.
+
+In addition, it meets the following set of requirements: 
+
+INPUT
+The input to the logging system may include any or all of the following items: 
+	- Source ID (module::procedure::variable)
+	- Custom message
+	- Priority (E.g., high, medium, low)
+	- Severity (E.g., fatal, critical, etc.)
+	- Type (E.g., exception, error, warning, information)
+	- System message (E.g., exception message)
+	- Call stack
+	- Details (E.g. name-value pairs) 
+The definition of some of these fields can be made compliant with existant logging standards. Most common logging standards include: Common Log Format (http://en.wikipedia.org/wiki/Common_Log_Format) and SysLog (http://en.wikipedia.org/wiki/Syslog). More resources on data logging can be found at http://en.wikipedia.org/wiki/Data_logging. 
+
+OUTPUT
+The output from the logging module is defined based on the following configuration items:
+	- Verbose (E.g., inclusion of details, priority, severity, call stack, etc.)
+	- Format (E.g., xml, database, flat)
+	- Filter (E.g., exclusion of source: type; source: priority, etc.)
+	- Location (E.g., filename, database connection string, etc.)
+	- Encryption
+	
+INTERFACE (optional)
+The interface should support means to:
+	- read logs
+	- search logs
+	- clear logs
+	- list logs
+	- decrypt logs
+The interface can be graphical and/or console/command-based.
+
+MISCELLANEOUS
+	- Logging can be access from any module
+	- Provides exception handling 
+	- Provides mechanism for queueing/batch handling (optional)
+	- Resources are not locked by logging
+	- Response time is irrelevant in logging
+	- Max log size is configurable parameter
+	- Provides mechanism for automatic purging
+	- Supports security for decryption purposes
+
+Configuration
+
+The user can decide what and where to log using an xml configuration file, named LogConfig.xml. If this file is not present or it is empty, nothing gets logged. 
+
+Step 1 
+
+The configuration file defines a log (file) entity, <Log/>, with a set of attributes and filters. The following attributes can be used: 
+
+Path 
+Represents the path (absolute or relative) to the log file. All folders on the path have to exist. If a file with the same path already exists, it will be appended to; otherwise, a new file will be created. No default value. 
+e.g., C:\Program Files\<Vendor>\<App>\Logs 
+
+Format 
+Represents the log file format. In the future, other file types may be included, such as database, xml, etc. No default value. 
+e.g., Flat (A delimited text file) 
+
+IncludeOnFilter 
+Represents the use of filters attached to the log. Defaults to 0. 
+e.g., 1 (Exclude all messages except the ones that pass one of the provided filters) 
+e.g., 0 (Include all messages except the ones that pass one of the provided filters)
+ 
+Verbose 
+Represents the amount of message details to be logged. It is given based on a bitmap, where the following bits are defined - 1 (Timestamp), 2 (User Message), 4 (Source), 8 (Priority), 16 (Severity), 32 (Group), 64 (Category), 128 (System Message), 256 (Call Stack), 512 (Details). A value of 0 corresponds to a value of 1023 (= 1 + 2 + 4 + 8 + 16 + 32 + 64 + 128 + 256 + 512) and means that all message details will be logged. Defaults to 0. 
+e.g., 3 (Only Timestamp and User Message details will be logged (= 1 + 2))
+ 
+Delimiter 
+Represents the delimiter string to be used inbetween the message details. Defaults to (Tab). 
+e.g. ', ' (Generate a comma-delimited (.csv) file)
+ 
+Encryption 
+Represents the encryption setting for the log. Currently, it is not supported. Defaults to 0. 
+
+MinSize 
+Represents the minimum size of data to be kept in the file during purging. Currently, it is not used because a circular purging is implemented. Defaults to 1KB (1024 bytes). 
+e.g., 1024 
+
+MaxSize 
+Represents the maximus size of data to be stored in the file before purging. Currently, once the MaxSize limit is reached, the file position pointer is reset to the beginning of the file so that the oldest log entries are overwritten with new ones. It amounts to a circular purging. The file will never exceed the MaxSize limit. Defaults to 1MB (1048576 bytes). 
+e.g., 1048576 
+
+
+Step 2 
+
+The configuration defines a filter entity, <Filter/>, with a set of attributes. The following attributes can be used: 
+
+Source 
+Represents the message originator (the unit that imports/uses the logging message). 
+e.g., TLogAgentForm (Target messages that are generated by the TLogAgentForm) 
+
+UserMsg 
+Represents the user message (or a part of it). If an empty string is specified then it matches all messages. Defaults to an empty string. 
+e.g., failed (Target messages that contain the string 'failed' in their user message)
+ 
+Priority 
+Represents the message priority. It can be one of the following values - 0 (None), 1 (Low), 2 (Medium), 3 (High). Defaults to 0. 
+e.g., 3 (Target messages with High priority)
+
+Severity 
+Represents the message severity. It can be one of the following values - 0 (None), 1 (Minor), 2 (Major), 3 (Critical), 4 (Fatal). Defaults to 0. 
+e.g., 3 (Target messages with Critical severity)
+ 
+Group 
+Represents the message group. It can be one of the following values - 0 (None), 1 (Hint), 2 (Warning), 3 (Error), 4 (Exception). Defaults to 0. 
+e.g., 3 (Target messages designated as Errors)
+ 
+Category 
+Represents the message category. The category is defined as a set of integers from 1 to 100. The numbers from 1 to 100 can be mapped to a meaning and then assigned to the message through its category. Note that messages can have one or more categories, or no category.
+
+SystemMsg 
+Represents the system / exception message (or a part of it). If an empty string is specified then it matches all messages. Defaults to an empty string. 
+e.g., typecast (Target messages that contain the string 'typecast' in their user message) 
+
+
+Step 3 
+
+To enable logging, place a LogConfig.xml file in the same folder that contains your executable. 
+
+Examples 
+
+Log all messages with all details in a comma-delimited file, named 'Log.csv'. 
+<?xml version="1.0"?>
+<Logs>
+	<Log Path='Log.csv' Format='Flat' Delimiter= ', ' IncludeOnFilter='0' />
+</Logs>
+
+Log messages in two files in the folder '\Logs', where 
+In the first file, 'Log_Form.txt', we store messages coming from the TLogAgentForm objects with their timestamp and user message only. 
+In the second file, 'Log_Other.txt', we store all messages that have priority of Medium and High with their timestamp, user message, and system message only. 
+<?xml version="1.0"?>
+<Logs>
+	<Log Path='Logs\Log_CC.txt' Format='Flat' IncludeOnFilter='1' Verbose='3'>
+                <Filter Source='TLogAgentForm'/>
+        </Log>
+	<Log Path='Logs\Log_Other.txt' Format='Flat' IncludeOnFilter='1' Verbose='131'>
+                <Filter Priority='3'/>
+				<Filter Priority='2'/>
+        </Log>
+</Logs>
+
+Usage 
+
+Inlcude uLogMessage in your uses clause. Then, anytime you want to log a message, call one of the TLogMessage static Post method (you do not have to worry about creating and destroying objects). 
+
+class procedure TLogMessage.Post(Src: TObject; UsrMsg: string; G: TLogMsgGroup; P: TLogMsgPriority = lmpLow; S: TLogMsgSeverity = lmsMinor; SysMsg: string = ' '); 
+class procedure TLogMessage.Post(Src: TClass; UsrMsg: string; G: TlogMsgGroup; P: TLogMsgPriority; S: TLogMsgSeverity; SysMsg: string); 
+class procedure TLogMessage.Post(Src: string; UsrMsg: string; G: TlogMsgGroup; P: TLogMsgPriority; S: TLogMsgSeverity; SysMsg: string); 
+
+For example, 
+
+TLogMessage.Post(Self, Format('Parsing request with ID: %d', [Source.ID]), lmgHint); 
+TLogMessage.Post(Self, 'Failed to send transaction: Provider not configured', lmgError, lmpHigh, lmsMajor); 
+TLogMessage.Post(Self, 'Failed to send transaction', lmgException, lmpHigh, lmsMajor, e.Message); 
+
+As a result, WM_LOG_MESSAGE will be send to the application. The TLogManager will pick it up and send it to its stores (if any are defined). The TLogStore(s) will log the message if it matches its definition (attributes and filters). 
+

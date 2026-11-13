@@ -1,0 +1,6 @@
+triangle,4.8
+triangle,2
+square,4.8
+penthagon,4.8
+pentagon,4.8
+circle,2

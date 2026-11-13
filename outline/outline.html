@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <link rel="stylesheet" href="outline.css" type="text/css">
+</head>
+
+<body onload="OutlineParser.parseContent(OutlineParser.content(document.getElementById('rawcontent').innerHTML), document.getElementById('content'));">
+    <div id='content'></div>
+    <pre id='rawcontent' class='hidden'>
+Level1-1
+    Level2-1
+        Level3-21
+            Level4-321
+    Level2-2
+        Level3-22  
+Level1-2
+    </pre>
+
+    <script type="text/javascript" src="Dom.js"></script>
+    <script type="text/javascript" src="outlineParser.js"></script>
+</body> 
+</html>

@@ -1,0 +1,25 @@
+This snippet is based on a 3-hour 4-task Software Developer test as defined in /doc/SoftwareDevTest.txt. 
+
+The task is to write a program that reads a CSV file with information about different regular polygons (all sides equal), and circles. Each row of the file contains the name of the polygon and its side length, in order.
+Acceptable polygons include:
+
+- triangle
+- square
+- pentagon
+
+Note also that the shape "circle" should be accepted. Of course, a circle has no side length; instead, the dimension refers to its radius.
+
+Here is an example CSV file:
+
+triangle,3.5
+circle,2
+
+Given the input above, your program should output:
+
+A triangle with side length 3.5 u has a perimeter of 10.5 u and an area of 5.30 u^2
+A circle with radius 2 u has a perimeter of 12.57 u and an area of 12.57 u^2
+
+Please write your solution using classes and objects as appropriate.
+
+Next, provide a judicious amount of unit tests for all the above requirements. You do not need to use a
+third-party unit testing tool. Just write some tests that give your code a good run for its money.

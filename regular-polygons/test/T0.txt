@@ -1,0 +1,2 @@
+triangle,3.5
+circle,2

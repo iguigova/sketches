@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Logs>
+	<Log Path='Logs\Log.txt' Format='Flat' IncludeOnFilter='1' Verbose='128'>
+		<Filter Priority='3'/>
+	</Log>
+	<Log Path='Logs\Log.csv' Format='Flat' IncludeOnFilter='0' Verbose='0' Delimiter= ', ' >
+		<Filter Severity='1'/>
+	</Log>
+</Logs>

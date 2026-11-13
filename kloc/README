@@ -1,0 +1,63 @@
+This snippet kounts the lines of code in a directory. It is old and comes as-is, as Delphi source to build: src/KLOC.dpr. 
+
+Usage 
+
+kloc <path> -R:[0,1] <space separated masks, e.g. *.pas *.cpp>
+
+Output Sample
+
+--------------------
+Command: kloc C:\BLUE\Sandbox\Delphi\Logging\ -R:1 *.pas *.dfm *.h *.cpp *.js *.html *.c *.xml *.sql *.bat *.nsi *.ini *.cs 
+
+uLogManager.pas: LineCount= 205
+uLogMessage.pas: LineCount= 340
+uLogStore.pas: LineCount= 85
+uLogStoreFlat.pas: LineCount= 145
+*.pas LineCount= 775
+
+C:\BLUE\Sandbox\Delphi\Logging\src\lib\ LineCount= 775
+
+uLogCursor.pas: LineCount= 17
+uLogCursorFlat.pas: LineCount= 71
+uLogView.pas: LineCount= 23
+*.pas LineCount= 111
+
+uLogView.dfm: LineCount= 16
+*.dfm LineCount= 16
+
+C:\BLUE\Sandbox\Delphi\Logging\src\viewer\ LineCount= 127
+
+LogMessage.cs: LineCount= 238
+*.cs LineCount= 238
+
+C:\BLUE\Sandbox\Delphi\Logging\src\port\ LineCount= 238
+
+sample01_LogConfig.xml: LineCount= 9
+sample02_LogConfig.xml: LineCount= 12
+*.xml LineCount= 21
+
+C:\BLUE\Sandbox\Delphi\Logging\test\ LineCount= 21
+
+uLogAgent.pas: LineCount= 137
+*.pas LineCount= 137
+
+uLogAgent.dfm: LineCount= 177
+*.dfm LineCount= 177
+
+C:\BLUE\Sandbox\Delphi\Logging\test\agent\ LineCount= 314
+
+Total LineCount= 1475
+--------------------
+
+Known Issues
+When I brushed it out of the closet, it appeared that:
+  . It crashes if you call it without parameters (Bug)
+  . It does not terminate until the user hits Enter (Feature: a design choice in order for the results to remain visible in the console until the user is ready to close it but, such behavior proves odd and unnecessary)
+
+Trivia
+The name KLOC is accidental. When I wrote the snippet, I wanted to have a quick and easy CLOC executable. People refer to CLOC to mean Count Lines Of Code but at the time I did not know what the abbreviation stood for and I heard and remembered it as KLOC.
+
+For a full blown version of a CLOC, see
+http://cloc.sourceforge.net/
+
+A point of difference between the two is that KLOC displays the filenames with the line counts but not a tabular report.

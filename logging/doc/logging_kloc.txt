@@ -1,0 +1,42 @@
+USAGE: kloc <path> -R:[0,1] <space separated masks, e.g. *.pas *.cpp>
+
+Command: kloc C:\BLUE\Sandbox\Delphi\Logging\ -R:1 *.pas *.dfm *.h *.cpp *.js *.html *.c *.xml *.sql *.bat *.nsi *.ini *.cs 
+
+uLogManager.pas: LineCount= 205
+uLogMessage.pas: LineCount= 340
+uLogStore.pas: LineCount= 85
+uLogStoreFlat.pas: LineCount= 145
+*.pas LineCount= 775
+
+C:\BLUE\Sandbox\Delphi\Logging\src\lib\ LineCount= 775
+
+uLogCursor.pas: LineCount= 17
+uLogCursorFlat.pas: LineCount= 71
+uLogView.pas: LineCount= 23
+*.pas LineCount= 111
+
+uLogView.dfm: LineCount= 16
+*.dfm LineCount= 16
+
+C:\BLUE\Sandbox\Delphi\Logging\src\viewer\ LineCount= 127
+
+LogMessage.cs: LineCount= 238
+*.cs LineCount= 238
+
+C:\BLUE\Sandbox\Delphi\Logging\src\port\ LineCount= 238
+
+sample01_LogConfig.xml: LineCount= 9
+sample02_LogConfig.xml: LineCount= 12
+*.xml LineCount= 21
+
+C:\BLUE\Sandbox\Delphi\Logging\test\ LineCount= 21
+
+uLogAgent.pas: LineCount= 137
+*.pas LineCount= 137
+
+uLogAgent.dfm: LineCount= 177
+*.dfm LineCount= 177
+
+C:\BLUE\Sandbox\Delphi\Logging\test\agent\ LineCount= 314
+
+Total LineCount= 1475
